@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:notesapp/views/widgets/custom_app_bar.dart';
 import 'package:notesapp/views/widgets/note_item_wdget.dart';
