@@ -29,12 +29,14 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   analyzer: 6.11.0
+  bloc: ^9.0.1
   build_runner: ^2.5.4
   cupertino_icons: ^1.0.8
   flutter:
     sdk: flutter
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  meta: ^1.16.0
 
 dev_dependencies:
   flutter_bloc: ^9.1.1
