@@ -1,67 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:notesapp/widgets/custom_button.dart';
-import 'package:notesapp/widgets/custom_text_field.dart';
+import 'package:notesapp/cubits/add_note_cubit/add_note_cubit.dart';
+import 'package:notesapp/widgets/add_note_form.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddNewNote extends StatelessWidget {
   const AddNewNote({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      child: SingleChildScrollView(child: FormWidget()),
-    );
-  }
-}
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: SingleChildScrollView(
+        child: BlocConsumer<AddNoteCubit, AddNoteState>(
+          listener: (context, state) {
+            if (state is AddNoteFailure) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.errorMessage),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
 
-class FormWidget extends StatefulWidget {
-  const FormWidget({super.key});
-
-  @override
-  State<FormWidget> createState() => _FormWidgetState();
-}
-
-class _FormWidgetState extends State<FormWidget> {
-  final GlobalKey<FormState> formKey = GlobalKey();
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-
-  String? title, content;
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      autovalidateMode: autovalidateMode,
-      child: Column(
-        children: [
-          const SizedBox(height: 32),
-          CustomTextField(
-            hintText: 'Title',
-            onSaved: (value) {
-              title = value;
-            },
-          ),
-          const SizedBox(height: 16),
-          CustomTextField(
-            hintText: 'Content',
-            maxLines: 5,
-            onSaved: (value) {
-              content = value;
-            },
-          ),
-          const SizedBox(height: 60),
-          CustomButton(
-            onTap: () {
-              if (formKey.currentState!.validate()) {
-                formKey.currentState!.save();
-              } else {
-                autovalidateMode = AutovalidateMode.always;
-                setState(() {});
-              }
-            },
-          ),
-          const SizedBox(height: 32),
-        ],
+            if (state is AddNoteSuccess) {
+              Navigator.pop(context);
+            }
+          },
+          builder: (context, state) {
+            if (state is AddNoteLoading) {
+              return const CircularProgressIndicator(
+                color: Colors.blue,
+              );
+            }
+            return const FormWidget();
+          },
+        ),
       ),
     );
   }
