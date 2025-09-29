@@ -8,34 +8,36 @@ class AddNewNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: SingleChildScrollView(
-        child: BlocConsumer<AddNoteCubit, AddNoteState>(
-          listener: (context, state) {
-            if (state is AddNoteFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(state.errorMessage),
-                  backgroundColor: Colors.red,
-                ),
-              );
-            }
-
-            if (state is AddNoteSuccess) {
-              Navigator.pop(context);
-            }
-          },
-          builder: (context, state) {
-            if (state is AddNoteLoading) {
-              return const CircularProgressIndicator(
-                color: Colors.blue,
-              );
-            }
-            return const FormWidget();
-          },
+    return BlocProvider(
+      create: (context) => AddNoteCubit(),
+      child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: BlocConsumer<AddNoteCubit, AddNoteState>(
+            listener: (context, state) {
+              if (state is AddNoteFailure) {
+                debugPrint(state.errorMessage);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.errorMessage),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
+          
+              if (state is AddNoteSuccess) {
+                Navigator.pop(context);
+              }
+            },
+            builder: (context, state) {
+              if (state is AddNoteLoading) {
+                return const CircularProgressIndicator(
+                  color: Colors.blue,
+                );
+              }
+              return SingleChildScrollView(child: const FormWidget());
+            },
+          ),
         ),
-      ),
     );
   }
 }
