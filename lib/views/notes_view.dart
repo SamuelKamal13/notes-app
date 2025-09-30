@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notesapp/cubits/notes_cubit/notes_cubit.dart';
 import 'package:notesapp/widgets/add_new_note.dart';
 import 'package:notesapp/widgets/custom_app_bar.dart';
 import 'package:notesapp/widgets/notes_view_list.dart';
@@ -8,29 +10,29 @@ class NotesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            isScrollControlled: true,
-            context: context,
-            builder: (context) {
-              return AddNewNote();
-            },
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
-      body: const Padding(
-        padding: EdgeInsets.all(24),
-        child: Column(
-          children: [
-            CustomAppBar(
-              title: 'Notes',
-              icon: Icons.search,
-            ),
-            Expanded(child: NotesListView()),
-          ],
+    return BlocProvider(
+      create: (context) => NotesCubit(),
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showModalBottomSheet(
+              isScrollControlled: true,
+              context: context,
+              builder: (context) {
+                return AddNewNote();
+              },
+            );
+          },
+          child: const Icon(Icons.add),
+        ),
+        body: const Padding(
+          padding: EdgeInsets.all(24),
+          child: Column(
+            children: [
+              CustomAppBar(title: 'Notes', icon: Icons.search),
+              Expanded(child: NotesListView()),
+            ],
+          ),
         ),
       ),
     );
