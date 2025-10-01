@@ -52,8 +52,9 @@ class _FormWidgetState extends State<FormWidget> {
                     var noteModel = NoteModel(
                       title: title!,
                       subTitle: content!,
-                      date: DateTime.now().toString(),
-                      color: Colors.blue.value,
+                      date:
+                          "${DateTime.now().month}/${DateTime.now().day}/${DateTime.now().year}",
+                      color: Colors.blueAccent.toARGB32(),
                     );
                     BlocProvider.of<AddNoteCubit>(context).addNote(noteModel);
                   } else {

@@ -1,21 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:notesapp/models/note_model.dart';
 import 'package:notesapp/views/edit_note_view.dart';
 
 class NotesCard extends StatelessWidget {
-  const NotesCard({super.key});
+  const NotesCard({super.key, required this.note});
+
+  final NoteModel note;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const EditNoteView()));
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const EditNoteView()),
+        );
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 16),
         child: Container(
-          padding: const EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 24),
+          padding: const EdgeInsets.only(
+            left: 24,
+            right: 24,
+            top: 8,
+            bottom: 24,
+          ),
           decoration: BoxDecoration(
-            color: Colors.yellow,
+            color: Color(note.color),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
@@ -24,11 +35,11 @@ class NotesCard extends StatelessWidget {
               ListTile(
                 contentPadding: const EdgeInsets.all(0),
                 textColor: Colors.black,
-                title: Text('Note Title', style: TextStyle(fontSize: 26)),
+                title: Text(note.title, style: TextStyle(fontSize: 26)),
                 subtitle: Padding(
                   padding: const EdgeInsets.only(top: 16, bottom: 16),
                   child: Text(
-                    'This is a brief description of the note. It gives an overview of the content.',
+                    note.subTitle,
                     style: TextStyle(fontSize: 20, color: Colors.black54),
                   ),
                 ),
@@ -41,7 +52,7 @@ class NotesCard extends StatelessWidget {
                 ),
               ),
               Text(
-                'May 1, 2023',
+                note.date,
                 style: TextStyle(fontSize: 14, color: Colors.black54),
               ),
             ],
