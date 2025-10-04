@@ -50,6 +50,12 @@ class NotesCard extends StatelessWidget {
                   onPressed: () {
                     note.delete();
                     BlocProvider.of<NotesCubit>(context).fetchAllNotes();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Note Deleted Successfully'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
                   },
                   icon: Icon(Icons.delete),
                   color: Colors.black,
