@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notesapp/cubits/add_note_cubit/add_note_cubit.dart';
+import 'package:notesapp/cubits/notes_cubit/notes_cubit.dart';
 import 'package:notesapp/widgets/add_note_form.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,6 +31,13 @@ class AddNewNote extends StatelessWidget {
 
             if (state is AddNoteSuccess) {
               Navigator.pop(context);
+              BlocProvider.of<NotesCubit>(context).fetchAllNotes();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Note Added Successfully'),
+                  backgroundColor: Colors.green,
+                ),
+              );
             }
           },
           builder: (context, state) {
