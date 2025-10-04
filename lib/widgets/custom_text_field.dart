@@ -6,7 +6,8 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.hintText,
     this.maxLines = 1,
-    this.onSaved, this.onChanged,
+    this.onSaved,
+    this.onChanged,
   });
 
   final String hintText;
@@ -37,6 +38,10 @@ class CustomTextField extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: BorderSide(color: kPrimaryColor, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Colors.red, width: 2),
         ),
       ),
     );
