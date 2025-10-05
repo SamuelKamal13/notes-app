@@ -16,21 +16,24 @@ class _ColorListViewState extends State<ColorListView> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40,
+      height: 60,
       child: ListView.builder(
         itemCount: kColors.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              currentIndex = index;
-              BlocProvider.of<AddNoteCubit>(context, listen: false).color =
-                  kColors[index];
-              setState(() {});
-            },
-            child: ColorItem(
-              isActive: currentIndex == index,
-              color: kColors[index],
+          return Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: GestureDetector(
+              onTap: () {
+                currentIndex = index;
+                BlocProvider.of<AddNoteCubit>(context, listen: false).color =
+                    kColors[index];
+                setState(() {});
+              },
+              child: ColorItem(
+                isActive: currentIndex == index,
+                color: kColors[index],
+              ),
             ),
           );
         },
@@ -47,18 +50,29 @@ class ColorItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isActive
-        ? Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: CircleAvatar(
-              radius: 22,
-              backgroundColor: Colors.white,
-              child: CircleAvatar(radius: 18, backgroundColor: color),
-            ),
-          )
-        : Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: CircleAvatar(radius: 20, backgroundColor: color),
-          );
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeInOut,
+      width: 56,
+      height: 56,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: color,
+        border: Border.all(
+          color: isActive ? Colors.white : Colors.transparent,
+          width: 3,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(isActive ? 0.5 : 0.3),
+            blurRadius: isActive ? 12 : 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: isActive
+          ? const Icon(Icons.check_rounded, color: Colors.white, size: 28)
+          : null,
+    );
   }
 }

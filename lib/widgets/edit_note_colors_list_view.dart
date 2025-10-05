@@ -26,20 +26,23 @@ class _EditNoteColorPickerState extends State<EditNoteColorPicker> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40,
+      height: 60,
       child: ListView.builder(
         itemCount: kColors.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              currentIndex = index;
-              widget.note.color = kColors[index].toARGB32();
-              setState(() {});
-            },
-            child: ColorItem(
-              isActive: currentIndex == index,
-              color: kColors[index],
+          return Padding(
+            padding: const EdgeInsets.only(right: 12),
+            child: GestureDetector(
+              onTap: () {
+                currentIndex = index;
+                widget.note.color = kColors[index].value;
+                setState(() {});
+              },
+              child: ColorItem(
+                isActive: currentIndex == index,
+                color: kColors[index],
+              ),
             ),
           );
         },

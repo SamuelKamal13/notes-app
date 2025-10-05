@@ -26,7 +26,6 @@ class _FormWidgetState extends State<FormWidget> {
       autovalidateMode: autovalidateMode,
       child: Column(
         children: [
-          const SizedBox(height: 32),
           CustomTextField(
             hintText: 'Title',
             onSaved: (value) {
@@ -36,14 +35,26 @@ class _FormWidgetState extends State<FormWidget> {
           const SizedBox(height: 16),
           CustomTextField(
             hintText: 'Content',
-            maxLines: 5,
+            maxLines: 6,
             onSaved: (value) {
               content = value;
             },
           ),
-          const SizedBox(height: 16),
-          ColorListView(),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Choose Color',
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Colors.white70,
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          const ColorListView(),
+          const SizedBox(height: 28),
           BlocBuilder<AddNoteCubit, AddNoteState>(
             builder: (context, state) {
               return CustomButton(
@@ -57,7 +68,7 @@ class _FormWidgetState extends State<FormWidget> {
                       subTitle: content!,
                       date:
                           "${DateTime.now().month}/${DateTime.now().day}/${DateTime.now().year}",
-                      color: Colors.blueAccent.toARGB32(),
+                      color: BlocProvider.of<AddNoteCubit>(context).color.value,
                     );
                     BlocProvider.of<AddNoteCubit>(context).addNote(noteModel);
                   } else {
@@ -68,7 +79,6 @@ class _FormWidgetState extends State<FormWidget> {
               );
             },
           ),
-          const SizedBox(height: 32),
         ],
       ),
     );

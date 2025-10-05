@@ -9,17 +9,17 @@ class CustomIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 46,
-      width: 46,
+      height: 50,
+      width: 50,
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.05),
-        borderRadius: BorderRadius.circular(16),
+        color: Colors.white.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.white.withOpacity(0.1), width: 1),
       ),
-      child: Center(
-        child: IconButton(
-          onPressed: onPressed,
-          icon: Icon(icon, color: Colors.white, size: 28),
-        ),
+      child: IconButton(
+        onPressed: onPressed,
+        icon: Icon(icon, color: Colors.white, size: 24),
+        padding: EdgeInsets.zero,
       ),
     );
   }

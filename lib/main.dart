@@ -26,8 +26,31 @@ class NotesApp extends StatelessWidget {
     return BlocProvider(
       create: (context) => NotesCubit()..fetchAllNotes(),
       child: MaterialApp(
-        theme: ThemeData(fontFamily: 'Poppins', brightness: Brightness.dark),
-        home: NotesView(),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color(0xFF6366F1),
+            brightness: Brightness.dark,
+            surface: const Color(0xFF1A1B23),
+            background: const Color(0xFF1A1B23),
+          ),
+          fontFamily: 'Poppins',
+          scaffoldBackgroundColor: const Color(0xFF1A1B23),
+          cardTheme: CardThemeData(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            elevation: 4,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
+        ),
+        home: const NotesView(),
       ),
     );
   }
